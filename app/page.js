@@ -1,7 +1,8 @@
 import Image from "next/image";
+import BlogSection from "./components/BlogSection";
 
 export default function Home() {
   return (
-    <h2>this is habibur</h2>
+    <BlogSection></BlogSection>
   );
 }
