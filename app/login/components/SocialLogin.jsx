@@ -10,7 +10,6 @@ export default function SocialLogin() {
   const session = useSession();
 
   const handleSocialLogin = (providerName) => {
-    // console.log("social login" , providerName)
     signIn(providerName);
   };
 
