@@ -14,7 +14,7 @@ export default function Navbar() {
      <div>
         <ol className='flex justify-between items-center gap-10 w-10/12 mx-auto py-3'>
             <li><Link href='/'>Home</Link></li>
-            <li><Link href='/blog'>Blog</Link></li>
+            <li><Link href='/my_blogs'>myBlog</Link></li>
             <li><Link href='/addBlog'>Add Blog</Link></li>
             {status == 'authenticated' ? (
               <>

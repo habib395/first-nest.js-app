@@ -27,7 +27,7 @@ export default async function blogDetailsPage({ params }) {
 
       <div className="flex items-center justify-between mt-6">
         <span className="text-sm px-3 py-1 bg-yellow-100 dark:bg-yellow-600 text-yellow-800 dark:text-white rounded-full">
-          #{data.tag}
+          {data.tag}
         </span>
         <div className="text-sm text-gray-600 dark:text-gray-400">
           Likes: {data.likes.length} | Votes: {data.votes}
