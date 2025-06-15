@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { headers } from "next/headers";
 import DeleteBookingButton from './components/DeletebookingButton';
+import { FaRegEdit } from "react-icons/fa";
 
 const  fetchBlogs = async() =>{
   const res = await fetch('http://localhost:3000/api/service', {
@@ -59,6 +60,10 @@ export default async function BlogPage() {
               <button className="mt-2 text-sm text-blue-600 hover:underline dark:text-blue-400">
                 Read More →
               </button>
+            </Link>
+
+            <Link href={`/my_blogs/${blog._id}`}>
+            <FaRegEdit className='h-8 w-8 font-bold' />
             </Link>
 
                 <DeleteBookingButton id={blog._id} />
