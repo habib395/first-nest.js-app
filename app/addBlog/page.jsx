@@ -71,7 +71,7 @@ const AddBlogs = () => {
     })
     const postedResponse = await res.json()
     console.log(postedResponse)
-    router.push("/")
+    router.push("/my_blogs")
   };
 
   return (
