@@ -5,14 +5,30 @@ import DeleteBookingButton from './components/DeletebookingButton';
 import { FaRegEdit } from "react-icons/fa";
 import Image from 'next/image';
 
-const  fetchBlogs = async() =>{
+// const  fetchBlogs = async() =>{
+//   const res = await fetch('http://localhost:3000/api/service', {
+//     headers: headers(),
+//   })
+//   const data = await res.json();
+//   return  data
+// }
+
+const fetchBlogs = async () => {
   const res = await fetch('http://localhost:3000/api/service', {
     headers: headers(),
-  })
+  });
+
+  if (!res.ok) {
+    console.error('Failed to fetch blogs:', res.status, res.statusText);
+    return [];
+  }
+
   const data = await res.json();
-  console.log(data)
-  return  data
-}
+
+  // Ensure it returns an array
+  return Array.isArray(data) ? data : data?.data || [];
+};
+
 
 export default async function BlogPage() {
   const data = await fetchBlogs();
@@ -24,7 +40,7 @@ export default async function BlogPage() {
       </h1>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {data?.map((blog) => (
+        {data.map((blog) => (
           <div
             key={blog._id}
             className="bg-white dark:bg-gray-900 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 flex flex-col justify-between"
