@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { headers } from "next/headers";
 import DeleteBookingButton from './components/DeletebookingButton';
 import { FaRegEdit } from "react-icons/fa";
+import Image from 'next/image';
 
 const  fetchBlogs = async() =>{
   const res = await fetch('http://localhost:3000/api/service', {
@@ -14,59 +15,82 @@ const  fetchBlogs = async() =>{
 }
 
 export default async function BlogPage() {
-    const data = await fetchBlogs()
+  const data = await fetchBlogs();
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800 dark:text-white">Latest Blogs</h1>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {data.map((blog) => (
+    <div className="min-h-screen px-4 py-10 bg-gradient-to-br from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <h1 className="text-4xl font-bold text-center mb-10 text-gray-800 dark:text-white">
+        📚 Latest Blogs
+      </h1>
+
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {data?.map((blog) => (
           <div
             key={blog._id}
-            className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300" >
+            className="bg-white dark:bg-gray-900 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 flex flex-col justify-between"
+          >
+            {/* Author Section */}
             <div className="flex items-center gap-4 mb-4">
-              <img
-                src={blog.userImage}
+              <Image
+                src={blog.userImage || '/default-avatar.png'}
+                width={40}
+                height={40}
                 alt={blog.name}
-                className="w-10 h-10 rounded-full"
+                className="rounded-full object-cover"
               />
               <div>
                 <p className="text-sm font-semibold text-gray-800 dark:text-white">{blog.name}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{new Date(blog.date).toLocaleDateString()}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {new Date(blog.date).toLocaleDateString()}
+                </p>
               </div>
             </div>
 
-            <img
-              src={blog.image}
-              alt={blog.title}
-              className="w-full h-40 object-cover rounded-xl mb-4"
-            />
+            {/* Blog Image */}
+            <div className="relative w-full h-40 mb-4">
+              <Image
+                src={blog.image || '/default-image.jpg'}
+                alt={blog.title}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-xl"
+              />
+            </div>
 
+            {/* Title and Content */}
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{blog.title}</h2>
-            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-3">{blog.content}</p>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-3">
+              {blog.content}
+            </p>
 
-            <div className="flex flex-wrap gap-2 mb-3">
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 mb-4">
               {blog.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 text-xs bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-white rounded-full"
+                  className="px-3 py-1 text-xs bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-full shadow-sm"
                 >
-                  {tag}
+                  #{tag}
                 </span>
               ))}
             </div>
 
-            <Link href={`/blogs/${blog._id}`}>
-              <button className="mt-2 text-sm text-blue-600 hover:underline dark:text-blue-400">
-                Read More →
-              </button>
-            </Link>
+            {/* Actions */}
+            <div className="flex items-center justify-between mt-auto">
+              <Link href={`/blogs/${blog._id}`}>
+                <span className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
+                  Read More →
+                </span>
+              </Link>
 
-            <Link href={`/my_blogs/${blog._id}`}>
-            <FaRegEdit className='h-8 w-8 font-bold' />
-            </Link>
+              <div className="flex items-center gap-4">
+                <Link href={`/my_blogs/${blog._id}`} className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 transition">
+                  <FaRegEdit className="w-5 h-5" />
+                </Link>
 
                 <DeleteBookingButton id={blog._id} />
+              </div>
+            </div>
           </div>
         ))}
       </div>

@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation"
 export default  function UpdateBlogPage({ params }) {
     const { data: session } = useSession()
     console.log(session?.user)
-    // console.log(params.id)
 
 const [startDate, setStartDate] = useState(new Date());
   const [loading, setLoading] = useState(false);

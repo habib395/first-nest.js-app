@@ -1,8 +1,8 @@
+
+
 "use client";
 import React from "react";
 import { signIn } from "next-auth/react";
-// import { FaGithub } from "react-icons/fa6";
-// import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ import SocialLogin from "./SocialLogin";
 
 export default function LoginForm() {
   const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -21,7 +22,7 @@ export default function LoginForm() {
         email,
         password,
         callbackUrl: "/",
-        redirect: false
+        redirect: false,
       });
       if (response.ok) {
         toast.success("Logged In successfully");
@@ -30,44 +31,73 @@ export default function LoginForm() {
       } else {
         toast.error("FAILED to Log In");
       }
-      //console.log({ email, password });
     } catch (error) {
       console.log(error);
       toast.error("FAILED to Log In");
     }
   };
+
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-8">
-      <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text  font-bold">Email</span>
-        </div>
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-md mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-md p-8 space-y-6"
+    >
+      <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white">
+        Welcome Back
+      </h2>
+
+      {/* Email */}
+      <div>
+        <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">
+          Email Address
+        </label>
         <input
           type="text"
           name="email"
-          placeholder="Type here"
-          className="input input-bordered w-full"
+          placeholder="Enter your email"
+          className="w-full input input-bordered bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-      </label>
-      <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text font-bold">Password</span>
-        </div>
+      </div>
+
+      {/* Password */}
+      <div>
+        <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">
+          Password
+        </label>
         <input
           type="password"
           name="password"
-          placeholder="Type here"
-          className="input input-bordered w-full"
+          placeholder="Enter your password"
+          className="w-full input input-bordered bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-      </label>
-      <button className="w-full h-12 bg-orange-500 text-white font-bold">
+      </div>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition duration-300"
+      >
         Sign In
       </button>
-      <p className="text-center">Or Sign In with</p>
+
+      {/* Divider */}
+      <div className="relative text-center">
+        <span className="text-sm text-gray-500 dark:text-gray-400 px-2 bg-white dark:bg-gray-900 z-10 relative">
+          Or sign in with
+        </span>
+        <div className="absolute left-0 right-0 top-1/2 border-t border-gray-300 dark:border-gray-700 z-0"></div>
+      </div>
+
+      {/* Social Login */}
       <SocialLogin />
-      <p className="text-center">
-        Already have an account?{" "}
-        <Link href="/register" className="text-orange-500 font-bold">
+
+      {/* Register Link */}
+      <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+        Don’t have an account?{" "}
+        <Link
+          href="/register"
+          className="text-orange-500 font-semibold hover:underline"
+        >
           Register
         </Link>
       </p>
